@@ -20,9 +20,10 @@ You need the PC version of Heretic (shareware or registered).
 	'-bpp' to choose bits per pixel (default is 8).
 	'-fullscreen' to run the game in fullscreen mode.
 	'-resize' to allow window to be resized.
-	'-net <num> <host1> [<host2> <host3> <host4>]' to enable networked game.
+	'-port <n>' to change UDP port for network game (default is 5029).
+	'-net <num> <host2> [<host3> <host4>]' to enable networked game.
 		<num> is player number (1-4).
-		<host<n>> are machine IP numbers on the network.
+		<host<n>> are other machine IP numbers on the network.
 	'-audio off' to switch off audio.
 	'-flat' to switch off texturing on floors/ceilings.
 	'-mem <n>' to change memory allocated to game in KB (8192 is default = 8MB).
