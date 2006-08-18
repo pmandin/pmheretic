@@ -84,6 +84,8 @@ int		steptable[256];
 //int		vol_lookup[128*256];
 int *vol_lookup=NULL;
 
+static SDL_bool quit = SDL_FALSE;
+
 //
 // This function loads the sound data from the WAD lump,
 //  for single sound.
@@ -391,6 +393,10 @@ void I_UpdateSound(void *unused, Uint8 *stream, int len)
 	Sint32 *source;
 	Sint16 *dest;
 
+	if (quit) {
+		return;
+	}
+
 	memset(tmpMixBuffer, 0, tmpMixBuffLen);
 
 	/* Add each channel to tmp mix buffer */
@@ -534,6 +540,8 @@ void I_ShutdownSound(void)
 	// Wait till all pending sounds are finished.
 	int done = 0;
 	int i;
+
+	quit = SDL_TRUE;
 
 	while ( !done ) {
 		for( i=0 ; i<8 && !(channels[i].startp) ; i++);
