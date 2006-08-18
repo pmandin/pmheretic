@@ -2,6 +2,12 @@
 *                     Changes done to Heretic sources                   *
 \***********************************************************************/
 
+-------------------------------- 0.53 -----------------------------------
+
+- Fixed crash in audio on exit.
+- Unrolled 4x rendering loops, a bit faster.
+- Atari: tried to make 060 friendly asm rendering routines.
+
 -------------------------------- 0.52 -----------------------------------
 
 - Disable checksum on networked packets, allow networking with machines with
