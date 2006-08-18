@@ -1,0 +1,219 @@
+/***********************************************************************\
+*                     Changes done to Heretic sources                   *
+\***********************************************************************/
+
+-------------------------------- 0.51 -----------------------------------
+
+- Document used environment variables.
+- SDL_mixer enable/disable check in configure was wrong.
+- Fixed uninitialized bottom array for visplane structure, causing R_MapPlane 
+  errors.
+
+-------------------------------- 0.50 -----------------------------------
+
+- Response file readable as '-response <filename>' also with legacy '@filename'
+  parameter. '@' character was not usable in standard Atari desktop dialog
+  box for command-line.
+- Atari: Reserve 256KB instead of 128KB for audio/video buffers as default.
+
+-------------------------------- 0.49 -----------------------------------
+
+- Configuration file and saved games now loaded/saved to $HOME/.heretic directory
+  if $HOME is defined.
+- Open first available joystick, and print its name. Can also select which
+  joystick to use (new 'num_joystick' value in heretic config file).
+- Print audio device informations when opening.
+- Atari: m68k asm for audio mixing routine.
+
+-------------------------------- 0.46 -----------------------------------
+
+- Z_Malloc() don't align memory blocks on 4 bytes boundary like Doom, fixed.
+
+-------------------------------- 0.45 -----------------------------------
+
+- Can compile with/without SDL_mixer also under Linux.
+- Atari: display memory left in ST-Ram for audio/video subsystems.
+
+-------------------------------- 0.44 -----------------------------------
+
+- Texturing on floors/ceilings can be switched off.
+
+-------------------------------- 0.43 -----------------------------------
+
+- Don't call sound related functions when audio disabled.
+
+-------------------------------- 0.42 -----------------------------------
+
+- Add music replay using Timidity and SDL_mixer.
+  (timidity-rwops.diff (in doc subdir) patch must be applied to SDL_mixer)
+- Fixed P_FindNextHighestFloor() for Heretic E3M8, from Doom legacy.
+- Atari: Force memory allocation to FastRam if available.
+
+-------------------------------- 0.41 -----------------------------------
+
+- Emulate Pause key with Alt+P.
+- Does not create shadow buffer of good size.
+- Fixed analog joystick usage.
+- Fixes for double buffered screen.
+- Wait end of rendering to resize screen.
+
+-------------------------------- 0.40 -----------------------------------
+
+- Throw nearly everything to the bin, restart from the original sources.
+- Only use SDL for audio/video/input.
+- Dynamic resize of screen possible.
+- Many memory leaks fixed using Valgrind.
+
+-------------------------------- 0.29 -----------------------------------
+
+- Document the '@filename' parameter, present in Heretic from the beginning,
+  which allows you to store parameters in a file. I did not know that
+  it was present in the source !
+- Added SDL support
+- Added configure script
+- Added '-fullscreen' command
+
+- Atari version:
+  Added Sting support for network and optimizations from Ronald Andersson
+  (Thanks!)
+  Use '-network [unix,sting]` to choose your favorite IP stack. 'unix' is
+  the MintNet sockets on Atari.
+
+-------------------------------- 0.24 -----------------------------------
+
+- Modified to be cross-compilable for target m68k-atari-mint
+  Just edit the makefile and put cross=y. Some other adjustments may be
+  necessary (CROSSBINDIR_IS_y value is the path to cross-compilation tools).
+  The new Atari executable is now built with gcc-2.8.1 .
+
+- Atari version:
+  Added network support (TCP/IP via MintNet), not tested
+
+-------------------------------- 0.23 -----------------------------------
+
+- Atari version:
+	Bug in 8 bits mode, corrected
+
+-------------------------------- 0.22 -----------------------------------
+
+- Linux version:
+	Svgalib:
+	  '-zoomscreen'	for fullscreen mode
+	  '-videomode <n>' to choose a video mode
+	X11:
+	  added program name in window title.
+	  now window resize works with the zoom routine.
+
+- Atari version:
+	Xbios
+	  '-zoomscreen'	for fullscreen mode
+	  '-videomode <n>' to choose a video mode on Falcon.
+	Vdi:
+	  '-zoomscreen'	for fullscreen mode
+	  '-novavdi' to force 15 bits in 16 bits mode
+	  modified by Xavier Joubert:
+	    - save/restore palette in 256 colours mode.
+	    - black border around displayed zone. 
+	    - test if AES is present or not.	
+
+- Separated string version in ./src/i_version.c
+- Added zoom routine
+- Added 32 bits support
+- Tics are calculated now after complete redraw of screen:
+  So now, the time taken to do the final display (copy,double buffer,zoom) is
+  taken into account.
+
+- Dynamic system routines
+  '-sound','-video','-music','-keyboard','-joystick,'-joypad','-mouse'
+  can select your preferred routine. Missing features on your system are
+  automatically set 'off'. Now you can easily add new routines.
+
+  Atari version:
+	-keyboard <param>	param =	ikbd,bios,off
+	-mouse <param>		param = ikbd,off
+	-joystick <param>	param = ikbd,off
+	-joypad <param>		param = on,off
+	-sound <param>		param = dma8,off
+	-video <param>		param = xbios,vdi,off
+
+	ikbd:		Ikbd-6301 interrupt routines for Atari Falcon/TT.
+	bios:		Bios/Gemdos keyboard routine for all Atari.
+	dma8:		Timer A sound interrupt routine for Atari Falcon/TT.
+	joypad on:	Use joypad ports on Atari Falcon.
+	xbios:		Xbios display on Atari Falcon/TT.
+	vdi:		VDI display for all Atari and clones.
+			Use '-nofastblit' to allocate VDI buffers in ST-Ram
+			instead of Fast-Ram.
+
+  Linux version:
+	-keyboard <param>	param =	svgalib,x11,off
+	-mouse <param>		param =	svgalib,x11,off
+	-sound <param>		param = audio,off
+	-video <param>		param = svgalib,x11,off
+
+	svgalib:	Svgalib routines for Linux/x86
+	x11:		X11 routines for Linux
+	audio:		Linux audio device routine
+
+-------------------------------- 0.15 -----------------------------------
+
+- Corrected 24bits rendering routine
+- Added low detail mode
+- Corrected bug in sound routine
+- Moved assembly m68k sources to ./src/m68k
+
+Svgalib version:
+  - Use '-video-8' to switch to 320x240x8 bits double buffer mode
+
+Atari version:
+  - Changed '-falcon8' to '-video-8'
+  - Added VDI display routine from Johan Klockhars
+    Use '-pixelinv' to use byte reversed pixels in TrueColour.
+  - Added DMA sound  
+  - Corrected conflict between sound and keyboard routine
+
+-------------------------------- 0.12 -----------------------------------
+
+- Corrected a problem with double buffering (messages were not deleted).
+
+Atari version:
+  - New keyboard routine: you can use mouse,joystick,joypad (port 0).
+    Delete old config files !
+
+-------------------------------- 0.11 -----------------------------------
+
+Atari version:
+  - Falcon version can use 8 bitplanes mode : '-falcon8' switch
+  - Should now work on Atari TT in 320x480x8 bits mode (not tested)
+
+-------------------------------- 0.10 -----------------------------------
+
+- Border in not fullscreen mode correctly refreshed in double buffer.
+
+Svgalib version:
+  - Now can double-buffer in 320x240 mode X style, if compiled for.
+
+-------------------------------- 0.09 -----------------------------------
+
+Atari version:
+  - More ASM routs to get (a bit) faster
+
+-------------------------------- 0.08 -----------------------------------
+
+Linux/x86/PC and [Mint,Tos]/m68k/F30 common sources 
+  - Back to C only for this version
+  - Some ASM routs for Atari version
+  - '-devparm' displays number of tics
+  - If $HOME is defined, configuration and games are saved in
+    "$HOME/.heretic/" else in "./"
+
+-------------------------------- 0.03 -----------------------------------
+
+- Display done in 8,15,16,24 bits modes.
+
+Linux version :
+  - Svgalib and X11 display
+
+-------------------------------- 0.02 -----------------------------------
+
+Port from DOS sources
