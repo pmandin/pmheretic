@@ -26,6 +26,7 @@ _$*
 *.ln
 core
 # CVS default ignores end
+aclocal.m4
 configure
 Makefile.in
 autom4te.cache
