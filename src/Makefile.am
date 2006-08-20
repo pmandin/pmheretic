@@ -7,7 +7,7 @@ bin_PROGRAMS = heretic
 header_files = am_data.h am_map.h ct_chat.h doomdata.h doomdef.h drcoord.h \
 	dstrings.h i_header.h info.h i_audio.h p_local.h p_spec.h r_local.h \
 	sounds.h soundst.h m_fixed.h i_music.h i_video.h i_sound.h i_net.h \
-	i_qmus2mid.h m_swap.h
+	i_system.h i_qmus2mid.h m_swap.h
 
 heretic_SOURCES =  am_map.c ct_chat.c d_main.c d_net.c f_finale.c g_game.c \
 	info.c in_lude.c m_misc.c mn_menu.c p_ceilng.c p_doors.c p_enemy.c \
