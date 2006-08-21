@@ -37,7 +37,7 @@ enum {
 };
 #endif
 
-sysheap_t	sysheap={DEFAULT_HEAP_SIZE,NULL};
+sysgame_t	sysgame={DEFAULT_HEAP_SIZE,NULL,false};
 
 // Code
 
@@ -166,6 +166,7 @@ static void I_InitFpu(void)
 		m68k_InitFpu();
 		FixedMul = FixedMul060;
 		FixedDiv2 = FixedDiv2060;
+		sysgame.cpu060 = true;
 	}
 #endif
 }
@@ -186,13 +187,13 @@ void I_Shutdown (void)
 	I_ShutdownNetwork();
 	I_ShutdownAudio();
 	I_ShutdownGraphics();
-	if (sysheap.zone) {
+	if (sysgame.zone) {
 #ifdef __MINT__
-		Mfree(sysheap.zone);
+		Mfree(sysgame.zone);
 #else
-		free(sysheap.zone);
+		free(sysgame.zone);
 #endif
-		sysheap.zone=NULL;
+		sysgame.zone=NULL;
 	}
 	SDL_Quit();
 }
@@ -276,26 +277,26 @@ byte *I_ZoneBase (int *size)
 	}
 	maximal_heap_size >>= 10;
 	maximal_heap_size -= 256;	/* Keep some KB */
-	if (sysheap.kb_used>maximal_heap_size)
-		sysheap.kb_used=maximal_heap_size;
+	if (sysgame.kb_used>maximal_heap_size)
+		sysgame.kb_used=maximal_heap_size;
 #endif
 
-    *size = sysheap.kb_used<<10;
+    *size = sysgame.kb_used<<10;
 
-	printf(" %d Kbytes allocated for zone\n",sysheap.kb_used);
+	printf(" %d Kbytes allocated for zone\n",sysgame.kb_used);
 
 #ifdef __MINT__
 	if (mxalloc_present) {
-		sysheap.zone = (void *)Mxalloc(*size, MX_PREFTTRAM);
+		sysgame.zone = (void *)Mxalloc(*size, MX_PREFTTRAM);
 		maximal_heap_size = Mxalloc(-1,MX_STRAM);
 	} else {
-		sysheap.zone = (void *)Malloc(*size);
+		sysgame.zone = (void *)Malloc(*size);
 		maximal_heap_size = Malloc(-1);
 	}
 	printf(" (%d Kbytes left for audio/video subsystem)\n", maximal_heap_size>>10);
 #else
-	sysheap.zone = malloc (*size);
+	sysgame.zone = malloc (*size);
 #endif
 
-    return (byte *) sysheap.zone;
+    return (byte *) sysgame.zone;
 }

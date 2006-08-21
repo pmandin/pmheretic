@@ -5,6 +5,7 @@
 -------------------------------- 0.54 -----------------------------------
 
 - Missing i_system.h file in sources.
+- Atari: more rendering optimizations, special 060 routine.
 
 -------------------------------- 0.53 -----------------------------------
 

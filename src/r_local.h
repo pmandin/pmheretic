@@ -432,6 +432,7 @@ extern	fixed_t			dc_texturemid;
 extern	byte			*dc_source;		// first pixel in a column
 
 void 	R_DrawColumn (void);
+void 	R_DrawColumn060 (void);
 void 	R_DrawColumnLow (void);
 void 	R_DrawFuzzColumn (void);
 void 	R_DrawFuzzColumnLow (void);

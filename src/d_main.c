@@ -584,9 +584,9 @@ void D_DoomMain(void)
 	}
 	p=M_CheckParm ("-mem");
     if (p && (p<myargc-1)) {
-		sysheap.kb_used = atoi(myargv[p+1]);
-		if (sysheap.kb_used<MINIMAL_HEAP_SIZE)
-			sysheap.kb_used=MINIMAL_HEAP_SIZE;
+		sysgame.kb_used = atoi(myargv[p+1]);
+		if (sysgame.kb_used<MINIMAL_HEAP_SIZE)
+			sysgame.kb_used=MINIMAL_HEAP_SIZE;
 	}
 	p=M_CheckParm ("-devparm");
     if (p) {

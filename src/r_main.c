@@ -5,6 +5,7 @@
 
 #include "doomdef.h"
 #include "r_local.h"
+#include "i_system.h"
 #include "i_video.h"
 
 int			viewangleoffset;
@@ -587,7 +588,11 @@ void R_ExecuteSetViewSize (void)
 
 	if (!detailshift)
 	{
-		colfunc = basecolfunc = R_DrawColumn;
+		if (sysgame.cpu060) {
+			colfunc = basecolfunc = R_DrawColumn060;
+		} else {
+			colfunc = basecolfunc = R_DrawColumn;
+		}
 		fuzzcolfunc = R_DrawFuzzColumn;
 		transcolfunc = R_DrawTranslatedColumn;
 		if (sysvideo.textured_spans)
