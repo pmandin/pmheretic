@@ -408,7 +408,7 @@ void R_DrawVisSprite (vissprite_t *vis, int x1, int x2)
 	if(vis->psprite)
 	{
 		dc_texturemid += FixedMul(((centery-viewheight/2)<<FRACBITS),
-			vis->xiscale);
+			vis->xiscale >> detailshift);
 		sprtopscreen += (viewheight/2-centery)<<FRACBITS;
 	}
 
@@ -686,12 +686,9 @@ void R_DrawPSprite (pspdef_t *psp)
 	tx = psp->sx-(SCREENWIDTH>>1)*FRACUNIT;
 
 	tx -= spriteoffset[lump];
-	if(viewangleoffset)
-	{
+	if (viewangleoffset) {
 		tempangle = ((centerxfrac/1024)*(viewangleoffset>>ANGLETOFINESHIFT));
-	}
-	else
-	{
+	} else {
 		tempangle = 0;
 	}
 	x1 = (centerxfrac + FixedMul (tx,pspritescale)+tempangle ) >>FRACBITS;
@@ -723,13 +720,10 @@ void R_DrawPSprite (pspdef_t *psp)
 	vis->x1 = x1 < 0 ? 0 : x1;
 	vis->x2 = x2 >= viewwidth ? viewwidth-1 : x2;
 	vis->scale = pspritescale<<detailshift;
-	if (flip)
-	{
+	if (flip) {
 		vis->xiscale = -pspriteiscale;
 		vis->startfrac = spritewidth[lump]-1;
-	}
-	else
-	{
+	} else {
 		vis->xiscale = pspriteiscale;
 		vis->startfrac = 0;
 	}
@@ -743,19 +737,13 @@ void R_DrawPSprite (pspdef_t *psp)
 		// Invisibility
 		vis->colormap = spritelights[MAXLIGHTSCALE-1];
 		vis->mobjflags |= MF_SHADOW;
-	}
-	else if(fixedcolormap)
-	{
+	} else if(fixedcolormap) {
 		// Fixed color
 		vis->colormap = fixedcolormap;
-	}
-	else if(psp->state->frame & FF_FULLBRIGHT)
-	{
+	} else if(psp->state->frame & FF_FULLBRIGHT) {
 		// Full bright
 		vis->colormap = colormaps;
-	}
-	else
-	{
+	} else {
 		// local light
 		vis->colormap = spritelights[MAXLIGHTSCALE-1];
 	}
