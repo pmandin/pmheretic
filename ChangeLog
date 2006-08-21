@@ -4,6 +4,7 @@
 
 -------------------------------- 0.54 -----------------------------------
 
+- Fixed low/high detail message.
 - Fixed weapon drawing in low detail.
 - Missing i_system.h file in sources.
 - Atari: more rendering optimizations, special 060 routine.
