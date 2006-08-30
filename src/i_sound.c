@@ -33,6 +33,7 @@ int 		lengths[NUMSFX];
 //  are modifed and added, and stored in the buffer
 //  that is submitted to the audio device.
 static Sint32 *tmpMixBuffer = NULL;
+static Sint16 *tmpMixBuffer2 = NULL;
 static int tmpMixBuffLen = 0;
 
 
@@ -389,7 +390,8 @@ int I_SoundIsPlaying(int handle)
 //
 void I_UpdateSound(void *unused, Uint8 *stream, int len)
 {
-	int i, chan;
+	int i, chan, srclen;
+	boolean mixToFinal = false;
 	Sint32 *source;
 	Sint16 *dest;
 
@@ -398,6 +400,10 @@ void I_UpdateSound(void *unused, Uint8 *stream, int len)
 	}
 
 	memset(tmpMixBuffer, 0, tmpMixBuffLen);
+ 	srclen = len;
+ 	if (sysaudio.convert) {
+ 		srclen = (int) (len / sysaudio.audioCvt.len_ratio);
+ 	}
 
 	/* Add each channel to tmp mix buffer */
 	for ( chan = 0; chan < NUM_CHANNELS; chan++ ) {
@@ -416,8 +422,8 @@ void I_UpdateSound(void *unused, Uint8 *stream, int len)
 
 		Uint32 maxlen = FixedDiv(channels[chan].length-position, step);
 		SDL_bool end_of_sample = SDL_FALSE;
-		if ((len>>2) <= maxlen) {
-			maxlen = len>>2;
+		if ((srclen>>2) <= maxlen) {
+			maxlen = srclen>>2;
 		} else {
 			end_of_sample = SDL_TRUE;
 		}
@@ -488,33 +494,68 @@ void I_UpdateSound(void *unused, Uint8 *stream, int len)
 		channels[ chan ].stepremainder = stepremainder;
 	}
 
-	/* Now rescale it for final buffer */
+	/* Now clip values for final buffer */
 	source = tmpMixBuffer;	
-	dest = (Sint16 *) stream;
-	for (i=0; i<len>>2; i++) {
-		Sint32 dl, dr;
-
+	if (sysaudio.convert) {
+		dest = (Sint16 *) tmpMixBuffer2;
+	} else {
+		dest = (Sint16 *) stream;
 #ifdef ENABLE_SDLMIXER
-		dl = *source++ + dest[0];
-		dr = *source++ + dest[1];
-#else
-		dl = *source++;
-		dr = *source++;
+		mixToFinal = true;
 #endif
+	}
 
-		if (dl > 0x7fff)
-			dl = 0x7fff;
-		else if (dl < -0x8000)
-			dl = -0x8000;
+	if (mixToFinal) {
+		for (i=0; i<srclen>>2; i++) {
+			Sint32 dl, dr;
 
-		*dest++ = dl;
+			dl = *source++ + dest[0];
+			dr = *source++ + dest[1];
 
-		if (dr > 0x7fff)
-			dr = 0x7fff;
-		else if (dr < -0x8000)
-			dr = -0x8000;
+			if (dl > 0x7fff)
+				dl = 0x7fff;
+			else if (dl < -0x8000)
+				dl = -0x8000;
 
-		*dest++ = dr;
+			*dest++ = dl;
+
+			if (dr > 0x7fff)
+				dr = 0x7fff;
+			else if (dr < -0x8000)
+				dr = -0x8000;
+
+			*dest++ = dr;
+		}
+	} else {
+		for (i=0; i<srclen>>2; i++) {
+			Sint32 dl, dr;
+
+			dl = *source++;
+			dr = *source++;
+
+			if (dl > 0x7fff)
+				dl = 0x7fff;
+			else if (dl < -0x8000)
+				dl = -0x8000;
+
+			*dest++ = dl;
+
+			if (dr > 0x7fff)
+				dr = 0x7fff;
+			else if (dr < -0x8000)
+				dr = -0x8000;
+
+			*dest++ = dr;
+		}
+	}
+
+	/* Conversion if needed */
+	if (sysaudio.convert) {
+		sysaudio.audioCvt.buf = (Uint8 *) tmpMixBuffer2;
+		sysaudio.audioCvt.len = srclen;
+		SDL_ConvertAudio(&sysaudio.audioCvt);
+
+		SDL_MixAudio(stream, sysaudio.audioCvt.buf, len, SDL_MIX_MAXVOLUME);
 	}
 }
 
@@ -555,6 +596,11 @@ void I_ShutdownSound(void)
 		Z_Free(tmpMixBuffer);
 		tmpMixBuffer = NULL;
 	}
+
+ 	if (tmpMixBuffer2) {
+ 		Z_Free(tmpMixBuffer2);
+ 		tmpMixBuffer2=NULL;
+ 	}
 }
 
 void I_StartupSound(void)
@@ -592,6 +638,9 @@ void I_InitSound(void)
 {
 	tmpMixBuffLen = sysaudio.obtained.samples * 2 * sizeof(Sint32);
 	tmpMixBuffer = Z_Malloc(tmpMixBuffLen, PU_STATIC, 0);
+ 	if (sysaudio.convert) {
+ 		tmpMixBuffer2 = Z_Malloc(tmpMixBuffLen>>1, PU_STATIC, 0);
+ 	}
 
 	I_StartupSound();
 }

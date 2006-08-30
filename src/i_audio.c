@@ -93,6 +93,8 @@ void I_InitAudio(void)
 	if (!sysaudio.enabled)
 		return;
 
+	sysaudio.convert = false;
+
 #ifdef ENABLE_SDLMIXER
 	{
 		int freq, channels;
@@ -112,6 +114,15 @@ void I_InitAudio(void)
 		sysaudio.obtained.format = format;
 		sysaudio.obtained.size = (SAMPLECOUNT*channels*((format&0xff)>>3));
 
+		if ((sysaudio.obtained.format != AUDIO_S16SYS) || (sysaudio.obtained.channels != 2)) {
+			if (SDL_BuildAudioCVT(&sysaudio.audioCvt,
+				AUDIO_S16SYS, 2, sysaudio.obtained.freq,
+				sysaudio.obtained.format, sysaudio.obtained.channels, sysaudio.obtained.freq) == -1) {
+				I_Error("Could not create audio converter\n");
+			}
+			sysaudio.convert = true;
+		}
+
 		I_InitMusic();
 		I_InitSound();
 
@@ -123,6 +134,15 @@ void I_InitAudio(void)
 
 	if (SDL_OpenAudio(&sysaudio.desired, &sysaudio.obtained)<0) {
 		I_Error("Could not open audio: %s\n", SDL_GetError());
+	}
+
+	if ((sysaudio.obtained.format != AUDIO_S16SYS) || (sysaudio.obtained.channels != 2)) {
+		if (SDL_BuildAudioCVT(&sysaudio.audioCvt,
+			AUDIO_S16SYS, 2, sysaudio.obtained.freq,
+			sysaudio.obtained.format, sysaudio.obtained.channels, sysaudio.obtained.freq) == -1) {
+			I_Error("Could not create audio converter\n");
+		}
+		sysaudio.convert = true;
 	}
 
 	I_InitMusic();
