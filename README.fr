@@ -37,7 +37,7 @@ ou enregistre).
 	  off sur Atari, on sur les autres systemes).
 
 	Utilisez Alt+Enter pour passer du mode plein ecran au mode fenetre.
-	Utilisez Alt+G pour capturer ou liberer la souris (pas sur Atari).
+	Utilisez Alt+G pour capturer ou liberer la souris.
 	Utilisez Alt+P ou la touche Pause pour mettre en pauser le jeu.
 
 * Version Atari:
