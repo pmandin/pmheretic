@@ -28,7 +28,7 @@
 int DisplayTicker = 0;
 int UpdateState;
 
-#ifdef __MINT__
+#if defined(__MINT__) && !defined(MX_STRAM)
 enum {
 	MX_STRAM=0,
 	MX_TTRAM,
