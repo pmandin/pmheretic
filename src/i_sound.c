@@ -429,7 +429,7 @@ void I_UpdateSound(void *unused, Uint8 *stream, int len)
 		}
 
 		{
-#if defined(__GNUC__) && defined(__M68020__)
+#if defined(__GNUC__) && (defined(__M68000__) || defined(__M68020__))
 			Uint32	step_int = step>>16;
 			Uint32	step_frac = step<<16;
 #endif
@@ -443,32 +443,17 @@ void I_UpdateSound(void *unused, Uint8 *stream, int len)
 				//  for this channel (sound)
 				//  to the current data.
 				// Adjust volume accordingly.
-#if defined(__GNUC__) && defined(__M68020__)
-				__asm__ __volatile__ (
-					"movel	%1@,a0\n"			/* a0 = *mixbuffer			*/	\
-				"	addal	%2@(%0:l:4),a0\n"	/* a0 += leftvol[sample]	*/	\
-				"	movel	a0,%1@+\n"			/* *mixbuffer++ = a0		*/	\
-				"	movel	%1@,a0\n"			/* a0 = *mixbuffer			*/	\
-				"	addal	%3@(%0:l:4),a0\n"	/* a0 += rightvol[sample]	*/	\
-				"	movel	a0,%1@+\n"			/* *mixbuffer++ = a0		*/	\
-				 	: /* no return value */
-				 	: /* input */
-				 		"d"(val), "a"(source), "a"(leftvol), "a"(rightvol)
-				 	: /* clobbered registers */
-				 		"a0", "cc", "memory"
-				);
-#else
 				*source++ += leftvol[val];
 				*source++ += rightvol[val];
-#endif
 
-#if defined(__GNUC__) && defined(__M68020__)
+#if defined(__GNUC__) && (defined(__M68000__) || defined(__M68020__))
 				__asm__ __volatile__ (
 						"addl	%3,%1\n"	\
 					"	addxl	%2,%0"	\
 				 	: /* no return value */
+						"=d"(position)
 				 	: /* input */
-				 		"d"(position), "d"(stepremainder),
+				 		"d"(stepremainder),
 						"d"(step_int), "d"(step_frac)
 				 	: /* clobbered registers */
 				 		"cc"
