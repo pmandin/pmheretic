@@ -450,11 +450,10 @@ void I_UpdateSound(void *unused, Uint8 *stream, int len)
 				__asm__ __volatile__ (
 						"addl	%3,%1\n"	\
 					"	addxl	%2,%0"	\
-				 	: /* no return value */
-						"=d"(position)
+				 	: /* output */
+						"=d"(position), "=d"(stepremainder)
 				 	: /* input */
-				 		"d"(stepremainder),
-						"d"(step_int), "d"(step_frac)
+						"d"(step_int), "r"(step_frac)
 				 	: /* clobbered registers */
 				 		"cc"
 				);
