@@ -112,7 +112,7 @@ fixed_t FixedMul020 (fixed_t a, fixed_t b)
 	 	: /* return value */	\
 			"=r" (retvalue)	\
 	 	: /* input */	\
-	 		"0"(a), "d"(b)	\
+	 		"0"(a), "g"(b)	\
 	 	: /* clobbered registers */	\
 	 		"d1", "d2", "cc"	\
 	);	\
@@ -163,7 +163,7 @@ fixed_t FixedMul060 (fixed_t a, fixed_t b)
 	 	: /* return value */	\
 			"=r" (retvalue)	\
 	 	: /* input */	\
-	 		"0"(a), "d"(b)	\
+	 		"g"(a), "g"(b)	\
 	 	: /* clobbered registers */	\
 	 		"fp0", "fp1", "cc"	\
 	);	\
