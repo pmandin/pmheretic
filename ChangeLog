@@ -2,6 +2,11 @@
 *                     Changes done to Heretic sources                   *
 \***********************************************************************/
 
+-------------------------------- 0.56 -----------------------------------
+
+- README: list supported game data files.
+- Add -iwad /path/to/gamefile.wad parameter.
+
 -------------------------------- 0.55 -----------------------------------
 
 - Convert audio if 16bits stereo not available.

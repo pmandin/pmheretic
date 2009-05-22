@@ -593,15 +593,18 @@ void D_DoomMain(void)
 		devparm = true;
 	}
 
-	// wadfiles[0] is a char * to the main wad
-	fp = fopen(wadfiles[0], "rb");
-	if(fp)
-	{
-		fclose(fp);
-	}
-	else
-	{ // Change to look for shareware wad
-		wadfiles[0] = SHAREWAREWADNAME;
+	p=M_CheckParm("-iwad");
+	if (p && (p<myargc-1)) {
+		wadfiles[0] = myargv[p+1];
+	} else {
+		// wadfiles[0] is a char * to the main wad
+		fp = fopen(wadfiles[0], "rb");
+		if(fp) {
+			fclose(fp);
+		} else {
+			// Change to look for shareware wad
+			wadfiles[0] = SHAREWAREWADNAME;
+		}
 	}
 
 	// Check for -CDROM

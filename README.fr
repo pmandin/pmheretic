@@ -14,6 +14,14 @@ ou enregistre).
 	  Si non present, la configuration et les parties sont placees dans le
 	    repertoire courant.
 
+* Fichiers de donnees des jeux:
+
+  Pour un comportement correct, et eviter une mauvaise detection de la version,
+il faut que les fichiers soient nommees de la maniere suivante:
+
+heretic.wad	Heretic, commercial
+heretic1.wad	Heretic, shareware
+
 * Parametres communs:
 
 	'@fichier' ou '-response <fichier>' pour lire les parametres a partir d'un
@@ -35,6 +43,8 @@ ou enregistre).
 	  par defaut, soit 8 Mo).
 	'-yieldcpu [on|off]' pour liberer le CPU de temps en temps (par defaut
 	  off sur Atari, on sur les autres systemes).
+	'-iwad /path/to/filename.wad' si le fichier de donnees du jeu ne se
+	  trouve pas dans le repertoire courant.
 
 	Utilisez Alt+Enter pour passer du mode plein ecran au mode fenetre.
 	Utilisez Alt+G pour capturer ou liberer la souris.
@@ -50,3 +60,6 @@ ou enregistre).
 		unix:	gestion Unix du reseau (par defaut)
 		sting:	gestion Sting du reseau (Atari seulement)
 
+-- 
+Patrice Mandin <patmandin@gmail.com>
+http://pmandin.atari.org/

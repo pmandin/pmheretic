@@ -11,6 +11,14 @@ You need the PC version of Heretic (shareware or registered).
 	  If set, configuration and saved games are put in $HOME/.heretic directory.
 	  If not set, configuration and saved games are put in current directory.
 
+* Game data files:
+
+  For proper behaviour and avoid misdetection, game files must be names like
+this:
+
+heretic.wad	Heretic, commercial
+heretic1.wad	Heretic, shareware
+
 * Common parameters:
 
 	'@filename' or '-response <filename>' to read parameters from a file.
@@ -29,6 +37,8 @@ You need the PC version of Heretic (shareware or registered).
 	'-mem <n>' to change memory allocated to game in KB (8192 is default = 8MB).
 	'-yieldcpu [on|off]' to free some CPU time (default is off for Atari,
 	 and on for other systems).
+	'-iwad /path/to/filename.wad' if game data file is not in current
+	  directory.
 
 	Use Alt+Enter to toggle between fullscreen and windowed mode.
 	Use Alt+G to toggle mouse grabbing.
@@ -43,3 +53,7 @@ You need the PC version of Heretic (shareware or registered).
 	Network: '-network ###'
 		unix:	Unix sockets network (default)
 		sting:	Sting sockets network (Atari only)
+
+-- 
+Patrice Mandin <patmandin@gmail.com>
+http://pmandin.atari.org/
