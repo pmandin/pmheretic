@@ -2,6 +2,11 @@
 *                     Changes done to Heretic sources                   *
 \***********************************************************************/
 
+-------------------------------- 0.57 -----------------------------------
+
+- Fix compilation for Coldfire CPU.
+- Fix compilation for gcc 4.
+
 -------------------------------- 0.56 -----------------------------------
 
 - README: list supported game data files.

@@ -16,6 +16,7 @@ heretic_SOURCES =  am_map.c ct_chat.c d_main.c d_net.c f_finale.c g_game.c \
 	p_user.c r_bsp.c r_data.c r_draw.c r_main.c r_plane.c r_segs.c r_things.c \
 	sb_bar.c sounds.c tables.c v_video.c w_wad.c z_zone.c soundst.c \
 	i_system.c i_audio.c m_fixed.c i_music.c i_video.c i_sound.c i_net.c \
-	i_net_unix.c i_net_sting.c i_qmus2mid.c m_swap.c
+	i_net_unix.c i_net_sting.c i_qmus2mid.c m_swap.c \
+	m_fixed_020.S m_fixed_060.S
 
 EXTRA_DIST = $(header_files)

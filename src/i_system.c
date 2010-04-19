@@ -147,7 +147,7 @@ void I_Init (void)
 
 static void I_InitFpu(void)
 {
-#ifdef __MINT__
+#if defined(__MINT__) && !defined(__mcoldfire__)
 	unsigned long cpu_cookie;
 
 	if (Getcookie(C__CPU, &cpu_cookie) != C_FOUND) {
@@ -163,7 +163,23 @@ static void I_InitFpu(void)
 	FixedDiv2 = FixedDiv2020;
 
 	if (cpu_cookie==60) {
-		m68k_InitFpu();
+	    __asm__ __volatile__ (
+				".chip	68060\n"
+			"	fmove%.l	fpcr,d0\n"
+			"	andl	#~0x30,d0\n"
+			"	orb		#0x20,d0\n"
+			"	fmove%.l	d0,fpcr\n"
+#ifdef __M68020__
+			"	.chip	68020"
+#else
+			"	.chip	68000"
+#endif
+			: /* no return value */
+			: /* no input */
+			: /* clobbered registers */
+				"d0", "cc"
+		);
+
 		FixedMul = FixedMul060;
 		FixedDiv2 = FixedDiv2060;
 		sysgame.cpu060 = true;

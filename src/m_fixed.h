@@ -35,21 +35,9 @@ fixed_t FixedMulSoft (fixed_t a, fixed_t b);
 fixed_t FixedDiv (fixed_t a, fixed_t b);
 fixed_t FixedDiv2Soft (fixed_t a, fixed_t b);
 
-#if defined(__GNUC__) && (defined(__M68000__) || defined(__M68020__))
-
-#define m68k_InitFpu()	\
-({	\
-    __asm__ __volatile__ (	\
-		"fmove%.l	fpcr,d0\n"	\
-	"	andl	#~0x30,d0\n"	\
-	"	orb		#0x20,d0\n"	\
-	"	fmove%.l	d0,fpcr"	\
-		: /* no return value */	\
-		: /* no input */	\
-		: /* clobbered registers */	\
-			"d0", "cc"	\
-	);	\
-});
+#if defined(__GNUC__) \
+	&& (defined(__M68000__) || defined(__M68020__)) \
+	&& !defined(__mcoldfire__)
 
 fixed_t FixedMul020 (fixed_t a, fixed_t b);
 fixed_t FixedDiv2020 (fixed_t a, fixed_t b);

@@ -675,7 +675,7 @@ boolean AM_clipMline(mline_t *ml, fline_t *fl)
 {
   enum { LEFT=1, RIGHT=2, BOTTOM=4, TOP=8 };
   register int outcode1 = 0, outcode2 = 0, outside;
-  fpoint_t tmp;
+  fpoint_t tmp = {0,0};
   int dx, dy;
 
 #define DOOUTCODE(oc, mx, my) \

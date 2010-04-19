@@ -465,7 +465,7 @@ __extension__							\
 	("	movl	%1,sp@-;				\
 		movl	%0,a0;					\
 		jsr		a0@;					\
-		addqw	#4,sp					\
+		addql	#4,sp					\
 	"	/* end of code */				\
 	:	/* no outputs */				\
 	:	"g"		(func)					\
@@ -483,7 +483,7 @@ __extension__							\
 	("	movl	%1,sp@-;				\
 		movl	%0,a0;					\
 		jsr		a0@;					\
-		addqw	#4,sp					\
+		addql	#4,sp					\
 	"	/* end of code */				\
 	:	/* no outputs */				\
 	:	"g"		(func)					\
@@ -501,7 +501,7 @@ __extension__							\
 	("	movl	%1,sp@-;				\
 		movl	%0,a0;					\
 		jsr		a0@;					\
-		addqw	#4,sp					\
+		addql	#4,sp					\
 	"	/* end of code */				\
 	:	/* no outputs */				\
 	:	"g"		(func)					\
@@ -520,7 +520,7 @@ __extension__							\
 	("	movw	%2,sp@-;				\
 		movl	%1,a0;					\
 		jsr		a0@;					\
-		addqw	#2,sp					\
+		addql	#2,sp					\
 	"	/* end of code */				\
 	:	"=r"	(retv)		/* out */	\
 	:	"g"		(func)		/* in */	\
@@ -539,7 +539,7 @@ __extension__							\
 	("	movw	%2,sp@-;				\
 		movl	%1,a0;					\
 		jsr		a0@;					\
-		addqw	#2,sp					\
+		addql	#2,sp					\
 	"	/* end of code */				\
 	:	"=r"	(retv)		/* out */	\
 	:	"g"		(func)		/* in */	\
@@ -558,7 +558,7 @@ __extension__							\
 	("	movw	%2,sp@-;				\
 		movl	%1,a0;					\
 		jsr		a0@;					\
-		addqw	#2,sp					\
+		addql	#2,sp					\
 	"	/* end of code */				\
 	:	"=r"	(retv)		/* out */	\
 	:	"g"		(func)		/* in */	\
@@ -577,7 +577,7 @@ __extension__							\
 	("	movl	%2,sp@-;				\
 		movl	%1,a0;					\
 		jsr		a0@;					\
-		addqw	#4,sp					\
+		addql	#4,sp					\
 	"	/* end of code */				\
 	:	"=r"	(retv)		/* out */	\
 	:	"g"		(func)		/* in */	\
@@ -596,7 +596,7 @@ __extension__							\
 	("	movw	%2,sp@-;				\
 		movl	%1,a0;					\
 		jsr		a0@;					\
-		addqw	#2,sp					\
+		addql	#2,sp					\
 	"	/* end of code */				\
 	:	"=r"	(retv)		/* out */	\
 	:	"g"		(func)		/* in */	\
@@ -615,7 +615,7 @@ __extension__							\
 	("	movw	%2,sp@-;				\
 		movl	%1,a0;					\
 		jsr		a0@;					\
-		addqw	#2,sp					\
+		addql	#2,sp					\
 	"	/* end of code */				\
 	:	"=r"	(retv)		/* out */	\
 	:	"g"		(func)		/* in */	\
@@ -634,7 +634,7 @@ __extension__							\
 	("	movl	%2,sp@-;				\
 		movl	%1,a0;					\
 		jsr		a0@;					\
-		addqw	#4,sp					\
+		addql	#4,sp					\
 	"	/* end of code */				\
 	:	"=r"	(retv)		/* out */	\
 	:	"g"		(func)		/* in */	\
@@ -653,7 +653,7 @@ __extension__							\
 	("	movl	%2,sp@-;				\
 		movl	%1,a0;					\
 		jsr		a0@;					\
-		addqw	#4,sp					\
+		addql	#4,sp					\
 	"	/* end of code */				\
 	:	"=r"	(retv)		/* out */	\
 	:	"g"		(func)		/* in */	\
@@ -674,7 +674,7 @@ __extension__							\
 		movw	%2,sp@-;				\
 		movl	%1,a0;					\
 		jsr		a0@;					\
-		addqw	#4,sp					\
+		addql	#4,sp					\
 	"	/* end of code */				\
 	:	"=r"	(retv)		/* out */	\
 	:	"g"		(func)		/* in */	\
@@ -696,7 +696,7 @@ __extension__							\
 		movw	%2,sp@-;				\
 		movl	%1,a0;					\
 		jsr		a0@;					\
-		addqw	#6,sp					\
+		addql	#6,sp					\
 	"	/* end of code */				\
 	:	"=r"	(retv)		/* out */	\
 	:	"g"		(func)		/* in */	\
@@ -718,7 +718,7 @@ __extension__							\
 		movw	%2,sp@-;				\
 		movl	%1,a0;					\
 		jsr		a0@;					\
-		addqw	#6,sp					\
+		addql	#6,sp					\
 	"	/* end of code */				\
 	:	"=r"	(retv)		/* out */	\
 	:	"g"		(func)		/* in */	\
@@ -740,7 +740,7 @@ __extension__							\
 		movl	%2,sp@-;				\
 		movl	%1,a0;					\
 		jsr		a0@;					\
-		addqw	#6,sp					\
+		addql	#6,sp					\
 	"	/* end of code */				\
 	:	"=r"	(retv)		/* out */	\
 	:	"g"		(func)		/* in */	\
@@ -762,7 +762,7 @@ __extension__							\
 		movl	%2,sp@-;				\
 		movl	%1,a0;					\
 		jsr		a0@;					\
-		addqw	#6,sp					\
+		addql	#6,sp					\
 	"	/* end of code */				\
 	:	"=r"	(retv)		/* out */	\
 	:	"g"		(func)		/* in */	\
@@ -784,7 +784,7 @@ __extension__							\
 		movl	%2,sp@-;				\
 		movl	%1,a0;					\
 		jsr		a0@;					\
-		addqw	#8,sp					\
+		addql	#8,sp					\
 	"	/* end of code */				\
 	:	"=r"	(retv)		/* out */	\
 	:	"g"		(func)		/* in */	\
@@ -806,7 +806,7 @@ __extension__							\
 		movl	%2,sp@-;				\
 		movl	%1,a0;					\
 		jsr		a0@;					\
-		addqw	#8,sp					\
+		addql	#8,sp					\
 	"	/* end of code */				\
 	:	"=r"	(retv)		/* out */	\
 	:	"g"		(func)		/* in */	\
@@ -830,7 +830,7 @@ __extension__							\
 		movw	%2,sp@-;				\
 		movl	%1,a0;					\
 		jsr		a0@;					\
-		addqw	#6,sp					\
+		addql	#6,sp					\
 	"	/* end of code */				\
 	:	"=r"	(retv)		/* out */	\
 	:	"g"		(func)		/* in */	\
@@ -855,7 +855,7 @@ __extension__							\
 		movw	%2,sp@-;				\
 		movl	%1,a0;					\
 		jsr		a0@;					\
-		addqw	#8,sp					\
+		addql	#8,sp					\
 	"	/* end of code */				\
 	:	"=r"	(retv)		/* out */	\
 	:	"g"		(func)		/* in */	\
@@ -879,8 +879,8 @@ __extension__							\
 		movl	%3,sp@-;				\
 		movw	%2,sp@-;				\
 		movl	%1,a0;					\
-		jsr		a0@;					\
-		addqw	#8,sp					\
+		jsr	a0@;					\
+		addql	#8,sp					\
 	"	/* end of code */				\
 	:	"=r"	(retv)		/* out */	\
 	:	"g"		(func)		/* in */	\
@@ -904,8 +904,8 @@ __extension__							\
 		movl	%3,sp@-;				\
 		movl	%2,sp@-;				\
 		movl	%1,a0;					\
-		jsr		a0@;					\
-		addaw	#10,sp					\
+		jsr	a0@;					\
+		lea	sp@(10),sp					\
 	"	/* end of code */				\
 	:	"=r"	(retv)		/* out */	\
 	:	"g"		(func)		/* in */	\
@@ -931,8 +931,8 @@ __extension__							\
 		movw	%3,sp@-;				\
 		movl	%2,sp@-;				\
 		movl	%1,a0;					\
-		jsr		a0@;					\
-		addaw	#10,sp					\
+		jsr	a0@;					\
+		lea	sp@(10),sp				\
 	"	/* end of code */				\
 	:	"=r"	(retv)		/* out */	\
 	:	"g"		(func)		/* in */	\
@@ -960,7 +960,7 @@ __extension__							\
 		movw	%2,sp@-;				\
 		movl	%1,a0;					\
 		jsr		a0@;					\
-		addaw	#10,sp					\
+		lea	sp@(10),sp					\
 	"	/* end of code */				\
 	:	"=r"	(retv)		/* out */	\
 	:	"g"		(func)		/* in */	\
@@ -988,7 +988,7 @@ __extension__							\
 		movl	%2,sp@-;				\
 		movl	%1,a0;					\
 		jsr		a0@;					\
-		addaw	#14,sp					\
+		lea	sp@(14),sp					\
 	"	/* end of code */				\
 	:	"=r"	(retv)		/* out */	\
 	:	"g"		(func)		/* in */	\
@@ -1018,7 +1018,7 @@ __extension__							\
 		movl	%2,sp@-;				\
 		movl	%1,a0;					\
 		jsr		a0@;					\
-		addaw	#14,sp					\
+		lea	sp@(14),sp					\
 	"	/* end of code */				\
 	:	"=r"	(retv)		/* out */	\
 	:	"g"		(func)		/* in */	\

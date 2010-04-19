@@ -2,7 +2,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ(2.59)
-AC_INIT(pmheretic, 0.56, patmandin@gmail.com)
+AC_INIT(pmheretic, 0.57, patmandin@gmail.com)
 AC_CONFIG_SRCDIR([src/i_system.c])
 AC_CONFIG_HEADER([config.h])
 AC_CONFIG_AUX_DIR([autotools])
@@ -11,6 +11,7 @@ AM_INIT_AUTOMAKE($PACKAGE_NAME, $PACKAGE_VERSION)
 
 # Checks for programs.
 AC_PROG_CC
+AM_PROG_AS
 
 # Checks for header files.
 AC_HEADER_STDC
