@@ -8,7 +8,7 @@
 
 static inline void RGBtoYUV(Uint8 *rgb, int *yuv)
 {
-#if 1
+#if 0
 	yuv[0] = 0.299*rgb[0] + 0.587*rgb[1] + 0.114*rgb[2];
 	yuv[1] = (rgb[2]-yuv[0])*0.565 + 128;
 	yuv[2] = (rgb[0]-yuv[0])*0.713 + 128;
