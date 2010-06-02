@@ -46,6 +46,7 @@ typedef struct {
 	int fullscreen;
 	int resize;
 	int textured_spans;
+	int overlay;
 	int yield_cpu;
 } sysvideo_t;
 

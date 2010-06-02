@@ -45,6 +45,8 @@ heretic1.wad	Heretic, shareware
 	  off sur Atari, on sur les autres systemes).
 	'-iwad /path/to/filename.wad' si le fichier de donnees du jeu ne se
 	  trouve pas dans le repertoire courant.
+	'-overlay' utilise l'overlay video YUV de SDL si disponible pour
+	  agrandir l'ecran.
 
 	Utilisez Alt+Enter pour passer du mode plein ecran au mode fenetre.
 	Utilisez Alt+G pour capturer ou liberer la souris.

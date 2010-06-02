@@ -6,6 +6,7 @@
 
 - Fix compilation for Coldfire CPU.
 - Fix compilation for gcc 4.
+- Add SDL YUV Overlay support.
 
 -------------------------------- 0.56 -----------------------------------
 
