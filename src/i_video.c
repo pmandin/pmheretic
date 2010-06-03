@@ -45,7 +45,6 @@ static int fps=0, last_fps=0, frame_tick=0;
 static int new_width=0, new_height=0;
 
 static SDL_Overlay *overlay;
-static SDL_Surface *shadow_overlay;
 static int overlay_format=SDL_YUY2_OVERLAY;
 
 static SDL_GrabMode mouse_grab=SDL_GRAB_OFF;
@@ -147,11 +146,6 @@ void I_ShutdownGraphics(void)
 	if (overlay) {
 		SDL_FreeYUVOverlay(overlay);
 		overlay = NULL;
-	}
-
-	if (shadow_overlay) {
-		SDL_FreeSurface(shadow_overlay);
-		shadow_overlay=NULL;
 	}
 
 	if (shadow) {
@@ -342,24 +336,22 @@ void I_FinishUpdate (void)
 			ov_rect.h = dsth;
 		}
 
-		SDL_BlitSurface(shadow, NULL, shadow_overlay, NULL);
-
                 switch (overlay_format)
                 {
                     case SDL_YUY2_OVERLAY:
-                         I_RGBtoYUY2(shadow_overlay, overlay);
+                         I_RGB8toYUY2(shadow, overlay);
                          break;
                     case SDL_YV12_OVERLAY:
-                         I_RGBtoYV12(shadow_overlay, overlay);
+                         I_RGB8toYV12(shadow, overlay);
                          break;
                     case SDL_UYVY_OVERLAY:
-                         I_RGBtoUYVY(shadow_overlay, overlay);
+                         I_RGB8toUYVY(shadow, overlay);
                          break;
                     case SDL_YVYU_OVERLAY:
-                         I_RGBtoYVYU(shadow_overlay, overlay);
+                         I_RGB8toYVYU(shadow, overlay);
                          break;
                     case SDL_IYUV_OVERLAY:
-                         I_RGBtoIYUV(shadow_overlay, overlay);
+                         I_RGB8toIYUV(shadow, overlay);
                          break;
                 }
 
@@ -463,8 +455,9 @@ void I_SetPalette (byte* palette)
 
 	if (shadow)
 		SDL_SetColors(shadow, colors, 0,256);
-	if (shadow_overlay)
-		SDL_SetColors(shadow_overlay, colors, 0,256);
+	if (sysvideo.overlay) {
+		I_Pal2Yuv(colors);
+	}
 	SDL_SetPalette(sdl_screen, SDL_LOGPAL|SDL_PHYSPAL, colors, 0, 256);
 }
 
@@ -531,23 +524,6 @@ static void InitSdlMode(int width, int height, int bpp)
 		}
 
 		if (sysvideo.overlay) {
-			Uint32 rmask,gmask,bmask;
-#if SDL_BYTEORDER == SDL_LIL_ENDIAN
-			rmask=255<<0;
-			gmask=255<<8;
-			bmask=255<<16;
-#else
-			rmask=255<<24;
-			gmask=255<<16;
-			bmask=255<<8;
-#endif
-			if (!shadow_overlay)
-				shadow_overlay = SDL_CreateRGBSurface(SDL_SWSURFACE,
-					SCREENWIDTH,SCREENHEIGHT,32,
-					rmask,gmask,bmask,0);
-			if (!shadow_overlay)
-			    I_Error("Can not create shadow surface for overlay: %s\n", SDL_GetError());
-
 			if (!shadow)
 				shadow = SDL_CreateRGBSurface(SDL_SWSURFACE,SCREENWIDTH,SCREENHEIGHT,8,0,0,0,0);
 			if (!shadow)
