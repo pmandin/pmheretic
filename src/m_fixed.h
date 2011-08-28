@@ -35,9 +35,7 @@ fixed_t FixedMulSoft (fixed_t a, fixed_t b);
 fixed_t FixedDiv (fixed_t a, fixed_t b);
 fixed_t FixedDiv2Soft (fixed_t a, fixed_t b);
 
-#if defined(__GNUC__) \
-	&& (defined(__M68000__) || defined(__M68020__)) \
-	&& !defined(__mcoldfire__)
+#if defined(__GNUC__) && (defined(__m68k__) && !defined(__mcoldfire__))
 
 fixed_t FixedMul020 (fixed_t a, fixed_t b);
 fixed_t FixedDiv2020 (fixed_t a, fixed_t b);

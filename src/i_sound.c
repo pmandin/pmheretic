@@ -429,7 +429,7 @@ void I_UpdateSound(void *unused, Uint8 *stream, int len)
 		}
 
 		{
-#if defined(__GNUC__) && (defined(__M68000__) || defined(__M68020__))
+#if defined(__GNUC__) && defined(__m68k__)
 			Uint32	step_int = step>>16;
 			Uint32	step_frac = step<<16;
 #endif
@@ -446,7 +446,7 @@ void I_UpdateSound(void *unused, Uint8 *stream, int len)
 				*source++ += leftvol[val];
 				*source++ += rightvol[val];
 
-#if defined(__GNUC__) && (defined(__M68000__) || defined(__M68020__))
+#if defined(__GNUC__) && defined(__m68k__)
 				__asm__ __volatile__ (
 						"addl	%3,%1\n"	\
 					"	addxl	%2,%0"	\

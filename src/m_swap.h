@@ -26,9 +26,7 @@
 // WAD files are stored little endian.
 #if SDL_BYTEORDER == SDL_BIG_ENDIAN
 
-#if defined(__GNUC__) \
-	&& (defined(__M68000__) || defined(__M68020__)) \
-	&& !defined(__mcoldfire__)
+#if defined(__GNUC__) && (defined(__m68k__) && !defined(__mcoldfire__))
 
 /*RA: The two 'extended asm' macros below allow  byteswaps	*/
 /*    to be performed without function call overhead costs.	*/

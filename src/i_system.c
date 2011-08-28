@@ -169,7 +169,7 @@ static void I_InitFpu(void)
 			"	andl	#~0x30,d0\n"
 			"	orb		#0x20,d0\n"
 			"	fmove%.l	d0,fpcr\n"
-#ifdef __M68020__
+#ifdef __mc68020__
 			"	.chip	68020"
 #else
 			"	.chip	68000"

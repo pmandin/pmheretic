@@ -1,6 +1,4 @@
-#if defined(__GNUC__) \
-	&& (defined(__M68000__) || defined(__M68020__)) \
-	&& !defined(__mcoldfire__)
+#if defined(__GNUC__) && (defined(__m68k__) && !defined(__mcoldfire__))
 
 	.globl	_FixedMul020
 	.globl	_FixedDiv2020
