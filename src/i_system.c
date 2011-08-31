@@ -148,7 +148,7 @@ void I_Init (void)
 static void I_InitFpu(void)
 {
 #if defined(__MINT__) && !defined(__mcoldfire__)
-	unsigned long cpu_cookie;
+	long cpu_cookie;
 
 	if (Getcookie(C__CPU, &cpu_cookie) != C_FOUND) {
 		return;
