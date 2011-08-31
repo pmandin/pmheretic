@@ -127,7 +127,7 @@ static void PacketGet (void)
     int			i;
     int			c;
     struct sockaddr_in	fromaddress;
-    int			fromlen;
+    socklen_t		fromlen;
     doomdata_t		sw;
 				
     fromlen = sizeof(fromaddress);
@@ -272,7 +272,7 @@ void I_InitNetwork_unix (void)
 #if defined(__MINT__)
 	/* Set non blocking mode */
 	{
-		const unsigned char *errmsg="I_InitNetwork: can not set non blocking socket\n";
+		const char *errmsg="I_InitNetwork: can not set non blocking socket\n";
 		int r;
 
 		r = fcntl (insocket, F_GETFL, 0);
