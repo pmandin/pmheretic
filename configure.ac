@@ -30,6 +30,16 @@ AC_PROG_GCC_TRADITIONAL
 AC_FUNC_VPRINTF
 AC_CHECK_FUNCS([memset mkdir strcasecmp strncasecmp strupr socket pow])
 
+case "$host" in
+	m68k*)
+		AC_CHECK_DEFINE([__m68k__], [],
+			[CFLAGS="$CFLAGS -D__m68k__"]
+		)
+		;;
+	*)
+		;;
+esac	
+
 # More library stuff
 
 # Math
