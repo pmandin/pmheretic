@@ -35,8 +35,6 @@ heretic1.wad	Heretic, shareware
 	'-audio off' to switch off audio.
 	'-flat' to switch off texturing on floors/ceilings.
 	'-mem <n>' to change memory allocated to game in KB (8192 is default = 8MB).
-	'-yieldcpu [on|off]' to free some CPU time (default is off for Atari,
-	 and on for other systems).
 	'-iwad /path/to/filename.wad' if game data file is not in current
 	  directory.
 	'-overlay' use SDL YUV Overlay if available to scale screen.

@@ -35,6 +35,10 @@
 void R_InitSpritesData(void);
 void ST_DrawFps(int fps);
 
+/*--- Defines ---*/
+
+#define FRAME_DURATION (1000 / (TICRATE * 2))	/* How much to pause if we are a fast machine */
+
 /*--- Local variables ---*/
 
 static SDL_Surface *sdl_screen, *shadow=NULL;
@@ -58,11 +62,6 @@ sysvideo_t sysvideo=
 {
 	SCREENWIDTH, SCREENHEIGHT, 8, SCREENWIDTH,
 	false, false, true, false,
-#ifdef __MINT__
-	false
-#else
-	true
-#endif
 };
 
 /*--- Local functions ---*/
@@ -307,7 +306,8 @@ void I_StartTic(void)
 //
 void I_FinishUpdate (void)
 {
-	int cur_ticks;
+	static int frame_start_tick = 0, frame_end_tick = 0;
+	int cur_ticks, cur_frame_duration;
 
 	// draws little dots on the bottom of the screen
 	if (devparm)
@@ -357,45 +357,58 @@ void I_FinishUpdate (void)
 
                 SDL_DisplayYUVOverlay(overlay, &ov_rect);
 	} else {
-		if (!shadow && SDL_MUSTLOCK(sdl_screen)) {
+		if (SDL_MUSTLOCK(sdl_screen)) {
 			SDL_UnlockSurface(sdl_screen);
 		}
 
 		if (shadow) {
 			SDL_BlitSurface(shadow, NULL, sdl_screen, &update_area);
 		}
-		if (sdl_screen->flags & SDL_DOUBLEBUF) {
-			SDL_Flip(sdl_screen);
+		SDL_Flip(sdl_screen);
 		
-			if (!shadow) {
-				screen = sdl_screen->pixels;
-			R_ExecuteSetViewSize();
-			}
-		} else {
-			SDL_UpdateRects(sdl_screen, 1, &update_area);
-		}
-
-		if (!shadow && SDL_MUSTLOCK(sdl_screen)) {
+		if (SDL_MUSTLOCK(sdl_screen)) {
 			SDL_LockSurface(sdl_screen);
 		}
+
+		if (sdl_screen->flags & SDL_DOUBLEBUF) {
+			if (!shadow) {
+				screen = sdl_screen->pixels;
+				screen += update_area.y * sdl_screen->pitch;
+				screen += update_area.x;
+
+				R_InitBuffer (scaledviewwidth, viewheight);
+				AM_SetViewSize();
+			}
+		}
+
 	}
 
 	fps++;
-	cur_ticks=SDL_GetTicks();
+	frame_end_tick = cur_ticks = SDL_GetTicks();
 	if (cur_ticks-frame_tick>1000) {
 		frame_tick=cur_ticks;
 		last_fps=fps;
 		fps=0;
 	}
 
-	if (sysvideo.yield_cpu) {
-		I_WaitVBL(1);
+	cur_frame_duration = frame_end_tick - frame_start_tick;
+	if (cur_frame_duration < FRAME_DURATION) {
+		int wait_duration = FRAME_DURATION - cur_frame_duration - 1;
+		if (wait_duration>0) {
+			SDL_Delay(wait_duration);
+		}
 	}
 
 	if (new_width && new_height) {
+		if (!sysvideo.overlay && SDL_MUSTLOCK(sdl_screen)) {
+			SDL_UnlockSurface(sdl_screen);
+		}
+
 		InitSdlMode(new_width, new_height, sysvideo.bpp);
 		new_width = new_height = 0;
 	}
+
+	frame_start_tick = frame_end_tick;
 }
 
 //
@@ -544,10 +557,10 @@ static void InitSdlMode(int width, int height, int bpp)
 
 		 	output_surf = shadow;
 		}
-	}
 
-	if (!sysvideo.overlay && !shadow && SDL_MUSTLOCK(sdl_screen)) {
-		SDL_LockSurface(sdl_screen);
+		if (SDL_MUSTLOCK(sdl_screen)) {
+			SDL_LockSurface(sdl_screen);
+		}
 	}
 
 	/* Preserve aspect ratio */
@@ -576,8 +589,10 @@ static void InitSdlMode(int width, int height, int bpp)
 		}
 
 	 	screen = output_surf->pixels;
-		screen += update_area.y * output_surf->pitch;
-		screen += update_area.x;
+		if (output_surf!=shadow) {
+			screen += update_area.y * output_surf->pitch;
+			screen += update_area.x;
+		}
 
 		sysvideo.width = update_area.w;
 		sysvideo.height = update_area.h;
@@ -600,6 +615,7 @@ static void InitSdlMode(int width, int height, int bpp)
 void I_InitGraphics(void)
 {
 	static int firsttime=1;
+	int i;
 
 	if (!firsttime)
 		return;
@@ -620,8 +636,6 @@ void I_InitGraphics(void)
 	/* Joystick stuff */
 	joystick = SDL_JoystickOpen(num_joystick);
 	if (joystick==NULL) {
-		int i;
-
 		fprintf(stderr, "Can not open joystick %d\n", num_joystick);
 		for (i=0; i<SDL_NumJoysticks(); i++) {
 			joystick=SDL_JoystickOpen(i);

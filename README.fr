@@ -41,8 +41,6 @@ heretic1.wad	Heretic, shareware
 	'-flat' pour désactiver le texturage des sols/plafonds.
 	'-mem <n>' pour choisir la quantite de memoire allouee au jeu en Ko (8192
 	  par defaut, soit 8 Mo).
-	'-yieldcpu [on|off]' pour liberer le CPU de temps en temps (par defaut
-	  off sur Atari, on sur les autres systemes).
 	'-iwad /path/to/filename.wad' si le fichier de donnees du jeu ne se
 	  trouve pas dans le repertoire courant.
 	'-overlay' utilise l'overlay video YUV de SDL si disponible pour

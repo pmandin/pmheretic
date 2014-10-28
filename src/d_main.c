@@ -563,15 +563,6 @@ void D_DoomMain(void)
     if (p) {
 		sysvideo.overlay = sysvideo.resize = true;
 	}
-	p=M_CheckParm ("-yieldcpu");
-    if (p && (p<myargc-1)) {
-		if (strcmp(myargv[p+1],"off")==0) {
-			sysvideo.yield_cpu = false;
-		}
-		if (strcmp(myargv[p+1],"on")==0) {
-			sysvideo.yield_cpu = true;
-		}
-	}
 
 	p=M_CheckParm ("-network");
     if (p && (p<myargc-1)) {
