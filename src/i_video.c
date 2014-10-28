@@ -377,7 +377,6 @@ void I_FinishUpdate (void)
 				screen += update_area.x;
 
 				R_InitBuffer (scaledviewwidth, viewheight);
-				AM_SetViewSize();
 			}
 		}
 
